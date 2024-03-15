@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "91323613285",
+    "project_id": "gps-flutter-android-ios",
+    "storage_bucket": "gps-flutter-android-ios.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:91323613285:android:a24002b137148f1eda868c",
+        "android_client_info": {
+          "package_name": "com.Comunhao.gps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "91323613285-f2n6ftrd3lus5eusgfe8ivck0ijce11r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.Comunhao.gps",
+            "certificate_hash": "931a8dca32fd0ae1d72cf05baabdd29792fae260"
+          }
+        },
+        {
+          "client_id": "91323613285-4dvqa00s0916dt0cj78l345gr9kknl6v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzX8di7O7Kwftx8mNBfPSF-rB0AUBkcAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "91323613285-4dvqa00s0916dt0cj78l345gr9kknl6v.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "91323613285-f609ng0ekm2ipf1b998gh4rqc1b090o3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.Comunhao.gps"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
