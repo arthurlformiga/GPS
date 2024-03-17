@@ -14,6 +14,7 @@ void main() async {
 
   Platform.isAndroid
     ? await Firebase.initializeApp(
+      name: "android_project_gpscomunhaopatos",
       options: const FirebaseOptions(
           apiKey: 'AIzaSyDzX8di7O7Kwftx8mNBfPSF-rB0AUBkcAc',
           appId: '1:91323613285:android:a24002b137148f1eda868c',
@@ -21,6 +22,7 @@ void main() async {
           projectId: 'gps-flutter-android-ios'
       ))
     : await Firebase.initializeApp(
+      name: "ios_project_gpscomunhaopatos",
       options: const FirebaseOptions(
           apiKey: 'AIzaSyDzX8di7O7Kwftx8mNBfPSF-rB0AUBkcAc',
           appId: '1:91323613285:android:a24002b137148f1eda868c',
