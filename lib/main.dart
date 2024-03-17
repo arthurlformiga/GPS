@@ -25,7 +25,7 @@ void main() async {
       name: "ios_project_gpscomunhaopatos",
       options: const FirebaseOptions(
           apiKey: 'AIzaSyDzX8di7O7Kwftx8mNBfPSF-rB0AUBkcAc',
-          appId: '1:91323613285:android:a24002b137148f1eda868c',
+          appId: '1:91323613285:ios:9e652778bd59142bda868c',
           messagingSenderId: '91323613285',
           projectId: 'gps-flutter-android-ios'
       )
