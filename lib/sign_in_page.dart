@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sign_in_button/sign_in_button.dart';
 import 'package:toast/toast.dart';
 import 'utils/FirebaseService.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class GoogleSignIn extends StatefulWidget {
   GoogleSignIn({Key? key}) : super(key: key);

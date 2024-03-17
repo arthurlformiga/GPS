@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gps/cadastrar_criancas.dart';
 import 'package:gps/cadastro_usuario.dart';
 import 'package:gps/pdfPreview.dart';
-import 'package:gps/pdfPreview.dart';
 import 'package:gps/registros_culto.dart';
 import 'checkin.dart';
 import 'home.dart';
@@ -21,7 +20,14 @@ void main() async {
           messagingSenderId: '91323613285',
           projectId: 'gps-flutter-android-ios'
       ))
-    : await Firebase.initializeApp();
+    : await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: 'AIzaSyDzX8di7O7Kwftx8mNBfPSF-rB0AUBkcAc',
+          appId: '1:91323613285:android:a24002b137148f1eda868c',
+          messagingSenderId: '91323613285',
+          projectId: 'gps-flutter-android-ios'
+      )
+  );
 
   runApp(MyApp());
 }
