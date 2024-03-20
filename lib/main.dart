@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gps/cadastrar_criancas.dart';
 import 'package:gps/cadastro_usuario.dart';
+import 'package:gps/incidentes.dart';
 import 'package:gps/pdfPreview.dart';
 import 'package:gps/registros_culto.dart';
 import 'checkin.dart';
@@ -14,7 +15,7 @@ void main() async {
 
   Platform.isAndroid
     ? await Firebase.initializeApp(
-      name: "android_project_gpscomunhaopatos",
+      //name: "android_project_gpscomunhaopatos",
       options: const FirebaseOptions(
           apiKey: 'AIzaSyDzX8di7O7Kwftx8mNBfPSF-rB0AUBkcAc',
           appId: '1:91323613285:android:a24002b137148f1eda868c',
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: 'telaInicial',
       routes: Navigate.rotas,
-      home: Home(), // Home()
+      home: Registros(), // Home()
     );
   }
 }
@@ -55,6 +56,7 @@ class Navigate {
     '/cadastroCrianca' : (context) => CadastroCrianca(),
     '/registrosCulto' : (context) => Registros(),
     '/criarPDF' : (context) => Pdfpreview(),
+    '/relatarIncidente' : (context) => Incidentes(),
   };
 }
 

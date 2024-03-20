@@ -38,10 +38,15 @@ class Pdfpreview extends StatelessWidget {
 
     FirebaseFirestore db = FirebaseFirestore.instance;
     final data = await db.collection("criancas").get();
+    final data2 = await db.collection("Incidentes").doc("Culto do dia " + DateTime.now().day.toString() + " de " + DateTime.now().month.toString()).get();
     var listaP = <String>[];
     var listaA = <String>[];
+    var listaInc = <String>[];
+    int contIncidentes = 0;
     int contPresentes = 0;
     int contAusentes = 0;
+
+    print(data2.data()!.values);
 
 
     for (var element in data.docs) {
@@ -52,6 +57,11 @@ class Pdfpreview extends StatelessWidget {
         contAusentes++;
         listaA.add(contAusentes.toString() + ". " + element.id.toString() + ", filho de: " + element.get("mãe").toString());
       }
+    }
+
+    for (var element in data2.data()!.values) {
+      contIncidentes++;
+      listaInc.add(contIncidentes.toString() + ") " + element.toString());
     }
 
     final logo = (await rootBundle.load('imagens/gps_logo_solo2.png')).buffer.asUint8List();
@@ -136,8 +146,54 @@ class Pdfpreview extends StatelessWidget {
         )
     );
 
+    pdf.addPage(
+      pw.Page(
+        pageTheme: logoGPS,
+        build: (context) {
+          return pw.Column(
+              children: [
+                pw.Text(
+                    "Lista de Incidentes Registrados",
+                    style: pw.TextStyle(
+                      fontWeight: pw.FontWeight.bold,
+                      fontSize: 30,
+                    )
+                ),
+
+                pw.Container(
+                  margin: pw.EdgeInsets.only(left: -150),
+                  padding: pw.EdgeInsets.only(top: 20),
+                  child: pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.start,
+                    children: incidentesRegistrados(listaInc),
+                  ),
+                )
+              ]
+          );
+        }
+      ),
+    );
+
     checkOut();
     return pdf.save();
+  }
+
+
+  List<pw.Text> incidentesRegistrados(List<String> lista) {
+    //FirebaseFirestore db = FirebaseFirestore.instance;
+    //final data = await db.collection("criancas").get();
+    var listaInc = <pw.Text>[];
+    //int contPresentes = 0;
+
+
+    for (var element in lista) {
+      listaInc.add(
+        pw.Text(
+          element.toString(),
+        ),
+      );
+    }
+    return listaInc;
   }
 
   List<pw.Text> criancasPresentes(List<String> lista) {

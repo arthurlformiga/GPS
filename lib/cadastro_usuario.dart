@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:masked_text/masked_text.dart';
 import 'package:toast/toast.dart';
@@ -8,6 +9,7 @@ class CadastroUsuario extends StatefulWidget {
 }
 
 class _CadastroUsuarioState extends State<CadastroUsuario> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _nome = TextEditingController();
   final _email = TextEditingController();
   final _senha = TextEditingController();
@@ -317,30 +319,102 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: ElevatedButton(
                       onPressed: () async {
-                        if (nome == "" || email == "" || senha == "" || zap == "") { //checa se é uma inserção nova de dados
-                          if (_nome.text == "" || _email.text == "" || _senha.text == "" || _zap.text == "") { //se for, esse campos nao podem estar vazios
+                        if(_senha.text.length >= 6) {
+                          if (nome == "" || email == "" || senha == "" || zap == "") { //checa se é uma inserção nova de dados
+                            if (_nome.text == "" || _email.text == "" || _senha.text == "" || _zap.text == "") { //se for, esse campos nao podem estar vazios
+                              Toast.show(
+                                  "Preencha todos os dados.",
+                                  duration: Toast.lengthShort,
+                                  gravity: Toast.center
+                              );
+                            } else { //se é inserção nova, e os dados nao sao vazios, checo por duplicados
+                              if (await checarDuplicados(_nome.text,_email.text)) {
+                                Toast.show(
+                                  "Nome ou email já cadastrado",
+                                  duration: Toast.lengthShort,
+                                );
+                              } else { //se nao for duplicado, salvo o usuario
+                                nome = _nome.text;
+                                email = _email.text;
+                                senha = _senha.text;
+                                zap = _zap.text;
+                                await _auth.createUserWithEmailAndPassword(email: email, password: senha);
+                                await _auth.signOut();
+
+                                setState(() {
+                                  if(ativo == false) {}
+                                  else if (ativo == true) {ativo = !ativo;}
+                                });
+
+                                if (_opcao == "Voluntário") { //checar qual tipo de usuario
+                                  CollectionReference users = FirebaseFirestore.instance.collection('Voluntário');
+
+                                  Map<String,dynamic> usuario = {};
+                                  usuario["nome"] = nome;
+                                  usuario["senha"] = senha;
+                                  usuario["zap"] = zap;
+                                  usuario["checkado"] = false;
+                                  usuario["validado"] = false;
+
+                                  users.doc(email).set(usuario);
+                                } else if (_opcao == "Responsável") {
+                                  CollectionReference users = FirebaseFirestore.instance.collection('Responsável');
+
+                                  Map<String,dynamic> usuario = {};
+                                  usuario["nome"] = nome;
+                                  usuario["senha"] = senha;
+                                  usuario["zap"] = zap;
+                                  usuario["checkado"] = false;
+                                  usuario["validado"] = false;
+
+                                  users.doc(email).set(usuario);
+                                } else if (_opcao == "Ambos") {
+                                  CollectionReference users = FirebaseFirestore.instance.collection('Voluntário');
+                                  CollectionReference resp = FirebaseFirestore.instance.collection('Responsável');
+
+                                  Map<String,dynamic> usuario = {};
+                                  usuario["nome"] = nome;
+                                  usuario["senha"] = senha;
+                                  usuario["zap"] = zap;
+                                  usuario["checkado"] = false;
+                                  usuario["validado"] = false;
+
+                                  resp.doc(email).set(usuario);
+                                  users.doc(email).set(usuario);
+                                }
+                              }
+                            }
+                          }
+                          else if (nome == _nome.text &&
+                              email == _email.text &&
+                              senha == _senha.text &&
+                              zap == _zap.text)
+                          { //se nao é a primeira inserção, tenho que ver se não clicou duas vezes em savar
                             Toast.show(
-                                "Preencha todos os dados.",
+                                "Nome ou email já cadastrado.",
                                 duration: Toast.lengthShort,
                                 gravity: Toast.center
                             );
-                          } else { //se é inserção nova, e os dados nao sao vazios, checo por duplicados
-                            if (await checarDuplicados(_nome.text,_email.text)) {
+                          } else { // caso nao vou seguir e verificar se é duplicado
+                            if (await checarDuplicados(_nome.text,_email.text)) { //é duplicado?
                               Toast.show(
                                 "Nome ou email já cadastrado",
                                 duration: Toast.lengthShort,
                               );
-                            } else { //se nao for duplicado, salvo o usuario
+                            } else { //se nao for, eu salvo
                               nome = _nome.text;
                               email = _email.text;
                               senha = _senha.text;
                               zap = _zap.text;
+                              await _auth.createUserWithEmailAndPassword(email: email, password: senha);
+                              await _auth.signOut();
+                              
                               setState(() {
                                 if(ativo == false) {}
                                 else if (ativo == true) {ativo = !ativo;}
                               });
 
-                              if (_opcao == "Voluntário") { //checar qual tipo de usuario
+                              if (_opcao == "Voluntário") {
                                 CollectionReference users = FirebaseFirestore.instance.collection('Voluntário');
 
                                 Map<String,dynamic> usuario = {};
@@ -378,70 +452,12 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
                               }
                             }
                           }
-                        }
-                        else if (nome == _nome.text &&
-                            email == _email.text &&
-                            senha == _senha.text &&
-                            zap == _zap.text)
-                        { //se nao é a primeira inserção, tenho que ver se não clicou duas vezes em savar
+                        } else {
                           Toast.show(
-                            "Nome ou email já cadastrado.",
-                            duration: Toast.lengthShort,
-                            gravity: Toast.center
+                              "A senha deve ter no mínimo 6 caracteres",
+                              duration: Toast.lengthLong,
+                              gravity: Toast.center
                           );
-                        } else { // caso nao vou seguir e verificar se é duplicado
-                          if (await checarDuplicados(_nome.text,_email.text)) { //é duplicado?
-                            Toast.show(
-                              "Nome ou email já cadastrado",
-                              duration: Toast.lengthShort,
-                            );
-                          } else { //se nao for, eu salvo
-                            nome = _nome.text;
-                            email = _email.text;
-                            senha = _senha.text;
-                            zap = _zap.text;
-                            setState(() {
-                              if(ativo == false) {}
-                              else if (ativo == true) {ativo = !ativo;}
-                            });
-
-                            if (_opcao == "Voluntário") {
-                              CollectionReference users = FirebaseFirestore.instance.collection('Voluntário');
-
-                              Map<String,dynamic> usuario = {};
-                              usuario["nome"] = nome;
-                              usuario["senha"] = senha;
-                              usuario["zap"] = zap;
-                              usuario["checkado"] = false;
-                              usuario["validado"] = false;
-
-                              users.doc(email).set(usuario);
-                            } else if (_opcao == "Responsável") {
-                              CollectionReference users = FirebaseFirestore.instance.collection('Responsável');
-
-                              Map<String,dynamic> usuario = {};
-                              usuario["nome"] = nome;
-                              usuario["senha"] = senha;
-                              usuario["zap"] = zap;
-                              usuario["checkado"] = false;
-                              usuario["validado"] = false;
-
-                              users.doc(email).set(usuario);
-                            } else if (_opcao == "Ambos") {
-                              CollectionReference users = FirebaseFirestore.instance.collection('Voluntário');
-                              CollectionReference resp = FirebaseFirestore.instance.collection('Responsável');
-
-                              Map<String,dynamic> usuario = {};
-                              usuario["nome"] = nome;
-                              usuario["senha"] = senha;
-                              usuario["zap"] = zap;
-                              usuario["checkado"] = false;
-                              usuario["validado"] = false;
-
-                              resp.doc(email).set(usuario);
-                              users.doc(email).set(usuario);
-                            }
-                          }
                         }
                       },
                       style: ElevatedButton.styleFrom(

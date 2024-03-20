@@ -185,7 +185,7 @@ class _CadastroCriancaState extends State<CadastroCrianca> {
                             obscureText: false,
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
-                              labelText: 'Insira o idade da criança',
+                              labelText: 'Insira a idade da criança',
                             ),
                           ),
                         ),

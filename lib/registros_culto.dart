@@ -112,7 +112,9 @@ class Registros extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   )
               ),
-              onPressed: (){},
+              onPressed: (){
+                Navigator.pushNamed(context, '/relatarIncidente');
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -124,7 +126,7 @@ class Registros extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
                     child: const Text(
-                      'Relatar Evento',
+                      'Relatar Incidente',
                       style: TextStyle(
                         color: Color.fromARGB(255, 254, 169, 1),
                         fontSize: 25,
