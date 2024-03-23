@@ -359,6 +359,7 @@ class _CadastroCriancaState extends State<CadastroCrianca> {
                                     CollectionReference criancas = FirebaseFirestore.instance.collection('criancas');
 
                                     Map<String,dynamic> crianca = {};
+                                    crianca["nome"] = nome;
                                     crianca["alergia"] = alergias;
                                     crianca["atipicidade"] = atipicidade;
                                     crianca["mãe"] = pai;
@@ -406,6 +407,7 @@ class _CadastroCriancaState extends State<CadastroCrianca> {
                                   CollectionReference criancas = FirebaseFirestore.instance.collection('criancas');
 
                                   Map<String,dynamic> crianca = {};
+                                  crianca["nome"] = nome;
                                   crianca["alergia"] = alergias;
                                   crianca["atipicidade"] = atipicidade;
                                   crianca["mãe"] = pai;

@@ -39,7 +39,6 @@ class OpcoesVoluntarios extends StatelessWidget {
 
                 var userDoc = await FirebaseFirestore.instance.collection("Cultos").doc(titulo)
                     .get().then((userDoc) {
-                      print("osh");
                   if (userDoc.exists) {
                     Map<String, dynamic>? map = userDoc.data() as Map<String, dynamic>?;
                     if (map?["Finalizado"] == true) {
@@ -120,8 +119,6 @@ class OpcoesVoluntarios extends StatelessWidget {
                       //Navigator.pushNamed(context, Registros(titulo: titulo) as String);
                     }
                   } else {
-                    FirebaseFirestore.instance.collection("Cultos").doc(titulo)
-                        .set({"Inicializado" : true, "Finalizado" : false});
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -151,6 +148,8 @@ class OpcoesVoluntarios extends StatelessWidget {
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
+                                          FirebaseFirestore.instance.collection("Cultos").doc(titulo)
+                                              .set({"Inicializado" : true, "Finalizado" : false});
                                           Navigator.pushNamed(context, '/registrosCulto');
                                         },
                                         style: ElevatedButton.styleFrom(

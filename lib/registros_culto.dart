@@ -149,12 +149,7 @@ class Registros extends StatelessWidget {
                   )
               ),
               onPressed: () async {
-                FirebaseFirestore.instance.collection('Cultos').get().then((snapshot) {
-                  for (DocumentSnapshot ds in snapshot.docs){
-                    ds.reference.delete();
-                  }
-                  Navigator.pushNamed(context, '/criarPDF');
-                });
+                Navigator.pushNamed(context, '/criarPDF');
               },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,

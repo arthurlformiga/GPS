@@ -91,7 +91,7 @@ class _incidentesState extends State<Incidentes> {
                       );
                     } else { //se nao for duplicado, salvo o usuario
                       incidentes = _incidentes.text;
-                      String nomeDoCulto = "Culto do dia " + DateTime.now().day.toString() + " de " + DateTime.now().month.toString();
+                      String nomeDoCulto = "Culto de " + DateTime.now().day.toString() + "." + DateTime.now().month.toString();
                       String horaDoIncidente = DateTime.now().toUtc().toLocal().hour.toString() + "h" + DateTime.now().minute.toString() + "min";
                       //DocumentReference docDoCulto = await db.collection("Incidentes").doc(nomeDoCulto);
                       //docDoCulto.update({horaDoIncidente : incidentes});
@@ -110,7 +110,7 @@ class _incidentesState extends State<Incidentes> {
                     );
                   } else { // caso nao vou seguir e verificar se é duplicado
                     incidentes = _incidentes.text;
-                    String nomeDoCulto = "Culto do dia " + DateTime.now().day.toString() + " de " + DateTime.now().month.toString();
+                    String nomeDoCulto = "Culto de " + DateTime.now().day.toString() + "." + DateTime.now().month.toString();
                     String horaDoIncidente = DateTime.now().toUtc().toLocal().hour.toString() + "h" + DateTime.now().minute.toString() + "min";
                     //db.collection("Incidentes").doc(nomeDoCulto).update({horaDoIncidente : incidentes});
                     adicionarIncidente(incidentes,nomeDoCulto,horaDoIncidente);

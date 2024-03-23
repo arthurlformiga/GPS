@@ -6,6 +6,7 @@ import 'package:gps/cadastro_usuario.dart';
 import 'package:gps/incidentes.dart';
 import 'package:gps/pdfPreview.dart';
 import 'package:gps/registros_culto.dart';
+import 'package:gps/tste.dart';
 import 'checkin.dart';
 import 'home.dart';
 import 'opcoes_voluntarios.dart';
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: 'telaInicial',
       routes: Navigate.rotas,
-      home: Registros(), // Home()
+      home: OpcoesVoluntarios(), // Home()
     );
   }
 }
@@ -52,7 +53,7 @@ class Navigate {
     '/telaInicial' : (context) => Home(),
     '/opcoesVoluntarios' : (context) => OpcoesVoluntarios(),
     '/cadastroUsuario' : (context) => CadastroUsuario(),
-    '/checkin' : (context) => Checkin(),
+    '/checkin' : (context) => Checkin2(),
     '/cadastroCrianca' : (context) => CadastroCrianca(),
     '/registrosCulto' : (context) => Registros(),
     '/criarPDF' : (context) => Pdfpreview(),
